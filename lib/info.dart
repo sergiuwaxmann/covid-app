@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:covidapp/constant.dart';
 import 'package:covidapp/widgets/header.dart';
+import 'package:covidapp/main.dart';
 
 class InfoScreen extends StatefulWidget {
   @override
@@ -43,6 +44,7 @@ class _InfoScreenState extends State<InfoScreen> {
               textTop: 'Information',
               textBottom: 'about COVID-19',
               icon: 'assets/icons/home.svg',
+              sceen: HomeScreen(),
               offset: offset,
             ),
             Padding(

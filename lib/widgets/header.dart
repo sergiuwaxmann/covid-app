@@ -8,6 +8,7 @@ class Header extends StatefulWidget {
   final String textTop;
   final String textBottom;
   final String icon;
+  final StatefulWidget sceen;
   final double offset;
   const Header({
     Key key,
@@ -15,6 +16,7 @@ class Header extends StatefulWidget {
     this.textTop,
     this.textBottom,
     this.icon,
+    this.sceen,
     this.offset,
   }) : super(key: key);
 
@@ -52,7 +54,7 @@ class _HeaderState extends State<Header> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return InfoScreen();
+                    return widget.sceen;
                   }),
                 );
               },

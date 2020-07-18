@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:covidapp/constant.dart';
 import 'package:covidapp/widgets/header.dart';
 import 'package:covidapp/widgets/counter.dart';
+import 'package:covidapp/info.dart';
 
 void main() => runApp(CovidApp());
 
@@ -63,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
               textTop: 'Please',
               textBottom: 'stay home.',
               icon: 'assets/icons/information.svg',
+              sceen: InfoScreen(),
               offset: offset,
             ),
             Container(
