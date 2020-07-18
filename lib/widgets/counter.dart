@@ -35,9 +35,7 @@ class Counter extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 10,
-        ),
+        SizedBox(height: 10),
         Text(
           '$number',
           style: TextStyle(

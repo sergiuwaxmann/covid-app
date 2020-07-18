@@ -3,19 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:covidapp/constant.dart';
 
-class Header extends StatelessWidget {
+class Header extends StatefulWidget {
   final String image;
   final String textTop;
   final String textBottom;
   final String icon;
+  final double offset;
   const Header({
     Key key,
     this.image,
     this.textTop,
     this.textBottom,
     this.icon,
+    this.offset,
   }) : super(key: key);
 
+  @override
+  _HeaderState createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return ClipPath(
@@ -38,21 +45,18 @@ class Header extends StatelessWidget {
           ),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return InfoScreen();
-                    }),
-                  );
-                },
-                child: SvgPicture.asset(icon),
-              ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return InfoScreen();
+                  }),
+                );
+              },
+              child: SvgPicture.asset(widget.icon),
             ),
             SizedBox(
               height: 20,
@@ -60,17 +64,20 @@ class Header extends StatelessWidget {
             Expanded(
               child: Stack(
                 children: <Widget>[
-                  SvgPicture.asset(
-                    image,
-                    width: 230,
-                    fit: BoxFit.fitWidth,
-                    alignment: Alignment.topCenter,
+                  Positioned(
+                    top: (widget.offset < 0) ? 0 : widget.offset,
+                    child: SvgPicture.asset(
+                      widget.image,
+                      width: 230,
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.topCenter,
+                    ),
                   ),
                   Positioned(
                     left: 150,
-                    top: 20,
+                    top: 20 - widget.offset / 2,
                     child: Text(
-                      '$textTop\n$textBottom',
+                      '${widget.textTop}\n${widget.textBottom}',
                       style: kHeadingTextStyle.copyWith(
                         color: Colors.white,
                       ),

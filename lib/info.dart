@@ -3,11 +3,38 @@ import 'package:flutter_svg/svg.dart';
 import 'package:covidapp/constant.dart';
 import 'package:covidapp/widgets/header.dart';
 
-class InfoScreen extends StatelessWidget {
+class InfoScreen extends StatefulWidget {
+  @override
+  _InfoScreenState createState() => _InfoScreenState();
+}
+
+class _InfoScreenState extends State<InfoScreen> {
+  final controller = ScrollController();
+  double offset = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(onScroll);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  void onScroll() {
+    setState(() {
+      offset = (controller.hasClients) ? controller.offset : 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: controller,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -16,6 +43,7 @@ class InfoScreen extends StatelessWidget {
               textTop: 'Information',
               textBottom: 'about COVID-19',
               icon: 'assets/icons/home.svg',
+              offset: offset,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -76,6 +104,53 @@ class InfoScreen extends StatelessWidget {
   }
 }
 
+class SymptomCard extends StatelessWidget {
+  final String image;
+  final String title;
+  final bool isActive;
+  const SymptomCard({
+    Key key,
+    this.image,
+    this.title,
+    this.isActive = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          isActive
+              ? BoxShadow(
+                  offset: Offset(0, 10),
+                  blurRadius: 20,
+                  color: kActiveShadowColor,
+                )
+              : BoxShadow(
+                  offset: Offset(0, 3),
+                  blurRadius: 6,
+                  color: kShadowColor,
+                )
+        ],
+      ),
+      child: Column(
+        children: <Widget>[
+          Image.asset(image, height: 90),
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class PreventCard extends StatelessWidget {
   final String image;
   final String title;
@@ -131,10 +206,14 @@ class PreventCard extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    Text(
-                      text,
-                      style: TextStyle(
-                        fontSize: 12,
+                    Expanded(
+                      child: Text(
+                        text,
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                     Align(
@@ -147,53 +226,6 @@ class PreventCard extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SymptomCard extends StatelessWidget {
-  final String image;
-  final String title;
-  final bool isActive;
-  const SymptomCard({
-    Key key,
-    this.image,
-    this.title,
-    this.isActive = false,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          isActive
-              ? BoxShadow(
-                  offset: Offset(0, 10),
-                  blurRadius: 20,
-                  color: kActiveShadowColor,
-                )
-              : BoxShadow(
-                  offset: Offset(0, 3),
-                  blurRadius: 6,
-                  color: kShadowColor,
-                )
-        ],
-      ),
-      child: Column(
-        children: <Widget>[
-          Image.asset(image, height: 90),
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
       ),
     );
   }
