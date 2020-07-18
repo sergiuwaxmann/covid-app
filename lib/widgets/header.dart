@@ -1,3 +1,4 @@
+import 'package:covidapp/info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:covidapp/constant.dart';
@@ -27,7 +28,10 @@ class Header extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Color(0xFF3383CD), Color(0xFF11249F)],
+            colors: [
+              Color(0xFF3383CD),
+              Color(0xFF11249F),
+            ],
           ),
           image: DecorationImage(
             image: AssetImage('assets/images/virus.png'),
@@ -38,7 +42,17 @@ class Header extends StatelessWidget {
           children: <Widget>[
             Align(
               alignment: Alignment.topRight,
-              child: SvgPicture.asset(icon),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return InfoScreen();
+                    }),
+                  );
+                },
+                child: SvgPicture.asset(icon),
+              ),
             ),
             SizedBox(
               height: 20,

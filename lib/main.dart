@@ -4,6 +4,8 @@ import 'package:covidapp/constant.dart';
 import 'package:covidapp/widgets/header.dart';
 import 'package:covidapp/widgets/counter.dart';
 
+import 'package:covidapp/info.dart';
+
 void main() => runApp(CovidApp());
 
 class CovidApp extends StatelessWidget {
@@ -15,8 +17,8 @@ class CovidApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: kBackgroundColor,
           fontFamily: 'Poppins',
-          // ignore: deprecated_member_use
           textTheme: TextTheme(
+            // ignore: deprecated_member_use
             body1: TextStyle(color: kBodyTextColor),
           ),
         ),
